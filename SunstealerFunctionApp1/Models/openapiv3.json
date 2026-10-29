@@ -1,0 +1,178 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Azure Function API",
+    "description": "Sunstealer Azure Function API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7215/api"
+    }
+  ],
+  "paths": {
+    "/AlwaysEncrypted": {
+      "get": {
+        "description": "Operation.Description: AlwaysEncrypted",
+        "operationId": "Operation.Id: AlwaysEncrypted",
+        "responses": {
+          "200": {
+            "description": "Description.Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/table1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EntityFrameworkLinq": {
+      "get": {
+        "description": "EntityFrameworkLinq",
+        "operationId": "EntityFrameworkLinq",
+        "responses": {
+          "200": {
+            "description": "Description.Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetConfiguration": {
+      "get": {
+        "description": "GetConfiguration",
+        "operationId": "GetConfiguration",
+        "responses": {
+          "200": {
+            "description": "Description.Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Log": {
+      "get": {
+        "description": "Log",
+        "operationId": "Log",
+        "responses": {
+          "200": {
+            "description": "Description.Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/TrackDependency": {
+      "get": {
+        "description": "TrackDependency",
+        "operationId": "TrackDependency",
+        "responses": { }
+      }
+    },
+    "/TrackEvent": {
+      "get": {
+        "description": "TrackEvent",
+        "operationId": "TrackEvent",
+        "responses": { }
+      }
+    },
+    "/TrackMetric": {
+      "get": {
+        "description": "TrackMetric",
+        "operationId": "TrackMetric",
+        "responses": { }
+      }
+    },
+    "/Test": {
+      "get": {
+        "description": "Container1",
+        "operationId": "Test",
+        "responses": { }
+      }
+    },
+    "/Throw": {
+      "get": {
+        "description": "Throw",
+        "operationId": "Throw",
+        "responses": { }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "table1": {
+        "required": [
+          "encrypted1",
+          "text1"
+        ],
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "encrypted1": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string",
+            "description": "<i>description</i>: Encrypted1 description",
+            "unique": true,
+            "myint": 667,
+            "mystring": "Revelation Space"
+          },
+          "date1": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "number1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text1": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string",
+            "description": "<i>description</i>: Text1 description",
+            "unique": false,
+            "myint": 667,
+            "mystring": "Sunstealer"
+          }
+        },
+        "example": [
+          {
+            "UUID": 1,
+            "Encrypted1": "DecryptedText",
+            "Date1": "2026-10-28T19:18:30.2869354-06:00",
+            "Number1": 1,
+            "Text1": "ClearText"
+          }
+        ]
+      }
+    }
+  }
+}

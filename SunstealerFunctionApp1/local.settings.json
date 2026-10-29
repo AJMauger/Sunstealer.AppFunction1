@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "APPLICATIONINSIGHTS_CONNECTION_STRING": "",
+    "WEBSITE_SITE_NAME": "FunctionApp1",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "Subscription_Id": ""
+  },
+  "ConnectionStrings": {
+    "AppInsightsConnectionString": "",
+    "AzureDbConnectionString": "Data Source=AJMWIN11-01\\SQLEXPRESS;Initial Catalog=database1;Integrated Security=True;Column Encryption Setting=Enabled;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite"
+  }
+}

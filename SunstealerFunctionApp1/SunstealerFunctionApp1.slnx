@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../SunstealerFunctionApp1.Tests/SunstealerFunctionApp1.Tests.csproj" Id="14963a1b-2ddd-4e88-9b7b-27cbb4c4465f" />
+  <Project Path="SunstealerFunctionApp1.csproj" />
+</Solution>
