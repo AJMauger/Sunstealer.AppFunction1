@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Configurations.AppSettings.Extensions;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -17,7 +16,6 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Net;
 using System.Web.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sunstealer.FunctionApp1.Functions;
 
@@ -39,12 +37,6 @@ public class Functions
     private readonly IDbContextFactory<ApplicationDbContext>? _dbContextFactory;
     private readonly IConfiguration? _configuration;
     private readonly ILogger? _logger;
-
-
-    // ajm: test
-    List<int> _array = new List<int>();
-    SequenceNumberService _sequenceNumberService = new();
-
 
     // ajm: ---------------------------------------------------------------------------------------
     /// <summary>
@@ -348,16 +340,40 @@ public class Functions
     /// <param name="req"></param>
     /// <returns></returns>
     [Function("Test")]
-    [OpenApiOperation(operationId: "Test", Description = "Container1")]
+    [OpenApiOperation(operationId: "Test", Description = "Test")]
     public async Task<IActionResult> Test([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
     {
         try
         {
-            TestSequeceNumberService(true);
+            return new OkObjectResult("Test");
+        }
+        catch (Exception e)
+        {
+            _logger?.LogError(e, $"Function.Test().");
+            return new ObjectResult(new
+            {
+                error = "Internal Server Error",
+                message = $"{e.Message} - {e.StackTrace}"
+            })
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
+    }
 
-            Console.WriteLine("CRASH");
-
-            TestSequeceNumberService(false);
+    // ajm: ---------------------------------------------------------------------------------------
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    [Function("TestSequenceNumberGenerator")]
+    [OpenApiOperation(operationId: "TestSequenceNumberGenerator", Description = "TestSequenceNumberGenerator")]
+    public async Task<IActionResult> TestSequenceNumberGenerator(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
+    {
+        try
+        {
 
             return new OkObjectResult("Test");
         }
@@ -445,36 +461,6 @@ public class Functions
         }
 
         return result;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="crash"></param>
-    /// <exception cref="Exception"></exception>
-    public void TestSequeceNumberService(bool crash)
-    {
-        int start = 0;
-        if (!crash)
-        {
-            start = 200_001;
-        } 
-
-        for (int i = start; i < 999_999; i++)
-        {
-            int j = _sequenceNumberService.Next();
-            Console.WriteLine($"[{i}]={j}");
-            if (_array.Contains(j))
-            {
-                throw new Exception($"SequenceNumberService.Next() {j} repeated.");
-            }
-            _array.Add(j);
-
-            if (crash && i==250_000)
-            {
-                break;
-            }
-        }
     }
 }
 
