@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.AlwaysEncrypted.AzureKeyVaultProvider;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using Sunstealer.FunctionApp1.Middleware;
 using Sunstealer.FunctionApp1.Services;
+using System.ClientModel.Primitives;
 
 Console.WriteLine($"Folder: {System.IO.Directory.GetCurrentDirectory()}");
 
@@ -81,7 +83,15 @@ builder.Services.AddLogging(options =>
     });
 });
 
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration.GetSection("AzureWebJobsStorage"));
+    clientBuilder.UseCredential(new DefaultAzureCredential());
+});
+
 builder.Services.AddSingleton<IApplicationService, ApplicationService>();
+
+builder.Services.AddSingleton<ISequenceNumberService, SequenceNumberService>();
 
 builder.Logging.AddOpenTelemetry(options =>
 {
